@@ -69,25 +69,74 @@ Chapters will be scheduled on specific days of the week.
 3. Set the publishing time
 4. Chapters will be scheduled on the selected days at the specified time
 
-## Troubleshooting
+---
 
-### Common Issues
+# Changelog & Improvements In This Fork
 
-1. **Upload Fails**
-   - Check your PHP upload_max_filesize setting
-   - Verify the ZIP file is not corrupted
-   - Ensure all files are .txt format
+## 1. **Core Functionality Enhancements**
+- **Password Protection**
+  - Added password protection for chapters with:
+    - Password field (min 4 characters)
+    - Password expiration date set autoset
+    - Meta field `fictioneer_post_password_expiration_date`
 
-2. **Chapters Not Appearing**
-   - Verify the story selection
-   - Check the WordPress error log
-   - Ensure file names are valid
+- **Expiration System**
+  - New "Expire Count" field to calculate expiration dates
+  - Timezone-aware date calculations using site settings
+  - Multiplier system: `days_to_add = expire_count * (chapter_number + 1)`
 
-3. **Scheduling Issues**
-   - Verify your timezone settings in WordPress
-   - Check that selected dates are in the future
-   - Ensure at least one day is selected for weekly scheduling
+## 2. **Scheduling Improvements**
+- **New in Schedule Type: Single Date**
+  - Added delay minutes parameter for staggered publishing
+  - Timezone conversion fixes using `DateTimeZone` handling
+  - Expiry start date field for password expiration calculations
 
+- **Enhanced Date Handling**
+  - Fixed timezone issues by using `get_option('timezone_string')`
+  - Added proper GMT conversion for scheduled dates
+  - Better error handling for date parsing
+
+## 3. **User Interface Additions**
+- **New Form Fields**
+  - Password field with strength requirements
+  - Expire count input
+  - Chapter categories multi-select
+  - Delay minutes for single schedule type
+  - Expiry start date picker
+
+- **Improved Validation**
+  - Better file type checking (strict ZIP validation)
+  - Password length enforcement
+  - Enhanced form field requirements
+
+## 4. **Security Enhancements**
+- Added `wp_kses_post` content sanitization
+- Better nonce verification checks
+- Stricter file upload validation
+- Password field autocomplete="new-password"
+
+## 5. **Error Handling & Logging**
+- Detailed error messages for:
+  - File read failures
+  - ZIP extraction issues
+  - Date parsing errors
+  - Meta field updates
+- Enhanced debug logging with `WP_DEBUG` support
+
+## 6. **Category Management**
+- Added multi-category selection
+- Implemented `wp_set_post_categories()` for taxonomy handling
+- Category selector with all available terms
+
+## 7. **Code Structure Improvements**
+- Better code organization with:
+  - Separated functions for date handling
+  - Clearer variable naming
+  - More modular code structure
+- Added cleanup functions for temp files
+
+---
+  
 ### Debug Mode
 
 To enable debug logging:
